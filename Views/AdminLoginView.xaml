@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="SmogShield_Pakistan.Views.AdminLoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:SmogShield_Pakistan.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="900" d:DesignWidth="1600"
+             Loaded="AdminLoginView_Loaded"
+             Background="Transparent">
+    <Grid>
+
+        <Border Background="#99000000" MouseLeftButtonDown="Overlay_Click"/>
+
+        <Border HorizontalAlignment="Center" VerticalAlignment="Center"
+                Background="White" CornerRadius="14"
+                Width="420" MaxWidth="420"
+                Padding="32,28,32,24"
+                Effect="{x:Null}">
+            <StackPanel>
+
+                <Grid Margin="0,0,0,18">
+                    <Border Background="{StaticResource LightGreen}" CornerRadius="10"
+                            Width="40" Height="40" HorizontalAlignment="Left">
+                        <Path Data="{StaticResource Icon.Lock}" Fill="#16743F"
+                              Stretch="Uniform" Width="18" Height="18"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border Background="Transparent" Cursor="Hand" Padding="8"
+                            CornerRadius="6" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            MouseLeftButtonDown="BtnClose_Click">
+                        <Path Data="{StaticResource Icon.XClose}" Fill="#9CA3AF"
+                              Stretch="Uniform" Width="12" Height="12"/>
+                    </Border>
+                </Grid>
+
+                <TextBlock Text="Admin Login" FontSize="22" FontWeight="Bold"
+                           Foreground="{StaticResource DarkText}" Margin="0,0,0,8"/>
+
+                <TextBlock TextWrapping="Wrap" FontSize="12" LineHeight="18"
+                           Foreground="{StaticResource GrayText}" Margin="0,0,0,22">
+                    <Run Text="Sign in to manage system health and review visitor submissions."/>
+                    <LineBreak/>
+                    <Run Text="Authorized administrators only."/>
+                </TextBlock>
+
+                <TextBlock Text="Username" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{StaticResource DarkText}" Margin="0,0,0,6"/>
+
+                <Border x:Name="UserInputBorder" BorderBrush="{StaticResource BorderGray}"
+                        BorderThickness="1.5" CornerRadius="8" Background="White"
+                        Height="42" Margin="0,0,0,14">
+                    <Grid>
+                        <Path Data="{StaticResource Icon.User}" Fill="#9CA3AF"
+                              Stretch="Uniform" Width="15" Height="15"
+                              HorizontalAlignment="Left" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="TxtUsername" FontSize="13"
+                                 Foreground="{StaticResource DarkText}"
+                                 Background="Transparent" BorderThickness="0"
+                                 VerticalContentAlignment="Center" Padding="36,0,12,0"
+                                 CaretBrush="{StaticResource DarkText}"/>
+                    </Grid>
+                </Border>
+
+                <TextBlock Text="Password" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{StaticResource DarkText}" Margin="0,0,0,6"/>
+
+                <Border x:Name="PassInputBorder" BorderBrush="{StaticResource BorderGray}"
+                        BorderThickness="1.5" CornerRadius="8" Background="White"
+                        Height="42" Margin="0,0,0,14">
+                    <Grid>
+                        <Path Data="{StaticResource Icon.Lock}" Fill="#9CA3AF"
+                              Stretch="Uniform" Width="15" Height="15"
+                              HorizontalAlignment="Left" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        <PasswordBox x:Name="TxtPassword" FontSize="13"
+                                     Foreground="{StaticResource DarkText}"
+                                     Background="Transparent" BorderThickness="0"
+                                     VerticalContentAlignment="Center" Padding="36,0,36,0"
+                                     CaretBrush="{StaticResource DarkText}"
+                                     PasswordChar="●"/>
+                        <TextBox x:Name="TxtPasswordPlain" FontSize="13" Visibility="Collapsed"
+                                 Foreground="{StaticResource DarkText}"
+                                 Background="Transparent" BorderThickness="0"
+                                 VerticalContentAlignment="Center" Padding="36,0,36,0"
+                                 CaretBrush="{StaticResource DarkText}"/>
+                        <Border Background="Transparent" Cursor="Hand" Padding="8"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                                MouseLeftButtonDown="BtnTogglePass_Click">
+                            <Path x:Name="EyeIcon" Data="{StaticResource Icon.EyeOff}" Fill="#9CA3AF"
+                                  Stretch="Uniform" Width="15" Height="15"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="ErrorBanner" Visibility="Collapsed"
+                        Background="#FEF2F2" BorderBrush="#FECACA"
+                        BorderThickness="1" CornerRadius="8"
+                        Padding="12,10" Margin="0,0,0,14">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Data="{StaticResource Icon.AlertCircle}" Fill="#DC2626"
+                              Stretch="Uniform" Width="16" Height="16"
+                              VerticalAlignment="Top" Margin="0,1,8,0"/>
+                        <StackPanel>
+                            <TextBlock Text="Invalid username or password."
+                                       FontSize="12" FontWeight="SemiBold" Foreground="#DC2626"/>
+                            <TextBlock Text="Check your credentials and try again."
+                                       FontSize="11" Foreground="#DC2626" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{StaticResource PrimaryGreen}" CornerRadius="8"
+                        Height="44" Cursor="Hand" Margin="0,0,0,12"
+                        MouseLeftButtonDown="BtnLogin_Click">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path Data="{StaticResource Icon.ArrowRight}" Fill="White"
+                              Stretch="Uniform" Width="15" Height="15" VerticalAlignment="Center"/>
+                        <TextBlock Text="  Access Admin Panel" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="White" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="Transparent" Cursor="Hand" Padding="8,6"
+                        HorizontalAlignment="Center" MouseLeftButtonDown="BtnBack_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Data="{StaticResource Icon.ArrowLeft}" Fill="#6B7280"
+                              Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center"/>
+                        <TextBlock Text="  Back to public home" FontSize="12"
+                                   Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{StaticResource BorderGray}" Height="1" Margin="0,14,0,12"/>
+
+                <TextBlock Text="Demo credentials · admin.demo / admin123"
+                           FontSize="10" Foreground="{StaticResource LightGrayText}"
+                           TextAlignment="Center" TextWrapping="Wrap"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

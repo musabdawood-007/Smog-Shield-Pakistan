@@ -1,0 +1,589 @@
+﻿<UserControl x:Class="SmogShield_Pakistan.Views.SearchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:SmogShield_Pakistan.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="900" d:DesignWidth="1600"
+             Loaded="SearchView_Loaded"
+             Background="#F3F4F6">
+
+    <UserControl.Resources>
+        <Style x:Key="WinBtn" TargetType="Button">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#E5E7EB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="WinBtnClose" TargetType="Button">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="Transparent">
+                            <Path x:Name="Ico" Data="{StaticResource Icon.WindowClose}"
+                                  Fill="#333333" Stretch="Uniform" Width="11" Height="11"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#E81123"/>
+                                <Setter TargetName="Ico" Property="Fill" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="NavActive" TargetType="Border">
+            <Setter Property="Background" Value="#DCFCE7"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+        <Style x:Key="NavIdle" TargetType="Border">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F3F4F6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="CityChip" TargetType="Border">
+            <Setter Property="Background" Value="#F3F4F6"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,6,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style x:Key="CityChipActive" TargetType="Border">
+            <Setter Property="Background" Value="#DCFCE7"/>
+            <Setter Property="BorderBrush" Value="#16A34A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,6,0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="White" BorderBrush="{StaticResource BorderGray}"
+                BorderThickness="0,0,0,1" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
+                    <Border Background="White" BorderBrush="{StaticResource BorderGray}" BorderThickness="1"
+                            CornerRadius="6" Width="22" Height="22">
+                        <Path Data="{StaticResource Icon.ShieldCheck}" Fill="#16A34A"
+                              Stretch="Uniform" Width="12" Height="12"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="  SmogShield" FontSize="12" FontWeight="Bold"
+                               Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                    <TextBlock Text="  ·  Visitor Workspace" FontSize="11"
+                               Foreground="{StaticResource LightGrayText}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource WinBtn}" Click="BtnMinimize_Click" ToolTip="Minimize">
+                        <Path Data="{StaticResource Icon.WindowMinimize}" Fill="#333"
+                              Stretch="Uniform" Width="11" Height="11"/>
+                    </Button>
+                    <Button Style="{StaticResource WinBtn}" Click="BtnMaximize_Click" ToolTip="Maximize / Restore">
+                        <Path x:Name="MaxPath" Data="{StaticResource Icon.WindowMaximize}" Fill="#333"
+                              Stretch="Uniform" Width="11" Height="11"/>
+                    </Button>
+                    <Button Style="{StaticResource WinBtnClose}" Click="BtnClose_Click" ToolTip="Close"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="210" MinWidth="180"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="White" BorderBrush="{StaticResource BorderGray}"
+                    BorderThickness="0,0,1,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="16,16,16,20">
+                        <Border Background="{StaticResource LightGreen}" CornerRadius="8" Width="30" Height="30">
+                            <Path Data="{StaticResource Icon.ShieldCheck}" Fill="#16A34A"
+                                  Stretch="Uniform" Width="15" Height="15"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="SmogShield" FontSize="13" FontWeight="Bold"
+                                       Foreground="{StaticResource DarkText}"/>
+                            <TextBlock Text="P A K I S T A N" FontSize="7"
+                                       Foreground="{StaticResource LightGrayText}" Margin="0,-1,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Margin="12,0,12,0">
+                        <TextBlock Text="WORKSPACE" FontSize="9" FontWeight="Bold"
+                                   Foreground="{StaticResource LightGrayText}" Margin="12,0,0,8"/>
+
+                        <Border Style="{StaticResource NavIdle}" MouseLeftButtonDown="NavDashboard_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource Icon.Dashboard}" Fill="#6B7280"
+                                      Stretch="Uniform" Width="16" Height="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="  Dashboard" FontSize="13"
+                                           Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource NavIdle}" MouseLeftButtonDown="NavRanking_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource Icon.BarChart}" Fill="#6B7280"
+                                      Stretch="Uniform" Width="16" Height="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="  Ranking" FontSize="13"
+                                           Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource NavActive}">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource Icon.Search}" Fill="#16743F"
+                                      Stretch="Uniform" Width="16" Height="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="  Search" FontSize="13" FontWeight="SemiBold"
+                                           Foreground="#16743F" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource NavIdle}" MouseLeftButtonDown="NavCompare_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource Icon.CompareArrows}" Fill="#6B7280"
+                                      Stretch="Uniform" Width="16" Height="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="  Compare" FontSize="13"
+                                           Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource NavIdle}" MouseLeftButtonDown="NavSettings_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource Icon.SettingsGear}" Fill="#6B7280"
+                                      Stretch="Uniform" Width="16" Height="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="  Settings" FontSize="13"
+                                           Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <Border Grid.Row="2" VerticalAlignment="Bottom"
+                            Background="#F0FDF4" CornerRadius="10" Padding="14" Margin="12,0,12,10">
+                        <StackPanel>
+                            <Path Data="{StaticResource Icon.Leaf}" Fill="#16743F"
+                                  Stretch="Uniform" Width="20" Height="20" Margin="0,0,0,8"/>
+                            <TextBlock Text="Awareness starts here." FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{StaticResource DarkText}" Margin="0,0,0,4"/>
+                            <TextBlock TextWrapping="Wrap" FontSize="10" LineHeight="14"
+                                       Foreground="{StaticResource GrayText}"
+                                       Text="Built to explore air quality and the algorithms behind it."/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Row="3" Background="Transparent" Cursor="Hand"
+                            Padding="16,12" BorderBrush="{StaticResource BorderGray}" BorderThickness="0,1,0,0"
+                            MouseLeftButtonDown="BtnEndSession_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource Icon.Logout}" Fill="#6B7280"
+                                  Stretch="Uniform" Width="15" Height="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="  End visitor session" FontSize="12"
+                                       Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="White" BorderBrush="{StaticResource BorderGray}"
+                        BorderThickness="0,0,0,1" Padding="20,12">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="Workspace" FontSize="12"
+                                       Foreground="{StaticResource LightGrayText}" VerticalAlignment="Center"/>
+                            <Path Data="{StaticResource Icon.ChevronRight}" Fill="#9CA3AF"
+                                  Stretch="Uniform" Width="12" Height="12" Margin="6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Search" FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Border Background="#F3F4F6" CornerRadius="6" Padding="10,4" Margin="0,0,14,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Width="6" Height="6" Fill="#9CA3AF" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="SourceBadgeText" Text="  SAMPLE DATA" FontSize="10" FontWeight="Bold"
+                                               Foreground="#6B7280" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="{StaticResource LightGreen}" CornerRadius="14"
+                                    Width="28" Height="28" Margin="0,0,8,0">
+                                <TextBlock x:Name="VisitorInitials" Text="V" FontSize="10" FontWeight="Bold" Foreground="#16743F"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock x:Name="VisitorNameText" Text="Visitor" FontSize="12" FontWeight="SemiBold"
+                                           Foreground="{StaticResource DarkText}"/>
+                                <TextBlock x:Name="VisitorRoleText" Text="Guest · Visitor" FontSize="10"
+                                           Foreground="{StaticResource LightGrayText}" Margin="0,-1,0,0"/>
+                            </StackPanel>
+                            <Path Data="{StaticResource Icon.ChevronDown}" Fill="#9CA3AF"
+                                  Stretch="Uniform" Width="12" Height="12" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled" Padding="24,20">
+                    <StackPanel>
+
+                        <Grid Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock Text="Search &amp; filter" FontSize="24" FontWeight="Bold"
+                                           Foreground="{StaticResource DarkText}"/>
+                                <TextBlock Text="Find a city or station, then narrow the readings that matter to you."
+                                           FontSize="13" Foreground="{StaticResource GrayText}" Margin="0,4,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Path Data="{StaticResource Icon.Calendar}" Fill="#9CA3AF"
+                                      Stretch="Uniform" Width="14" Height="14" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="DateText" Text="" FontSize="12"
+                                           Foreground="{StaticResource GrayText}" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Border Background="#F9FAFB" BorderBrush="{StaticResource BorderGray}"
+                                BorderThickness="1" CornerRadius="8" Padding="14,10" Margin="0,0,0,12">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource Icon.Info}" Fill="#6B7280"
+                                      Stretch="Uniform" Width="15" Height="15" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock FontSize="12" Foreground="{StaticResource GrayText}" VerticalAlignment="Center"
+                                           x:Name="DataNoticeText" Text="Loading live data from OpenAQ…"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border x:Name="SearchBarBorder" Background="White" BorderBrush="#16A34A"
+                                BorderThickness="2" CornerRadius="10" Padding="14,10" Margin="0,0,0,6">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Path Grid.Column="0" Data="{StaticResource Icon.Search}" Fill="#16743F"
+                                      Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <TextBox Grid.Column="1" x:Name="TxtSearch"
+                                         BorderThickness="0" Background="Transparent"
+                                         FontSize="14" Foreground="{StaticResource DarkText}"
+                                         VerticalContentAlignment="Center"
+                                         TextChanged="TxtSearch_TextChanged"
+                                         KeyDown="TxtSearch_KeyDown"/>
+                                <Border Grid.Column="2" Background="#F3F4F6" CornerRadius="4"
+                                        Padding="8,3" VerticalAlignment="Center">
+                                    <TextBlock Text="Ctrl K" FontSize="10" Foreground="{StaticResource LightGrayText}"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <Grid Margin="0,0,0,12">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Path Data="{StaticResource Icon.PlugZap}" Fill="#16A34A"
+                                      Stretch="Uniform" Width="14" Height="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="  Fast Lookup via Hash Table/Dictionary" FontSize="12"
+                                           Foreground="#16743F" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock Text="O(1) average retrieval for indexed city or station keys."
+                                       FontSize="10" Foreground="{StaticResource LightGrayText}"
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2.4*"/>
+                                <ColumnDefinition Width="14"/>
+                                <ColumnDefinition Width="1.1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+
+                                <Border Background="White" BorderBrush="{StaticResource BorderGray}"
+                                        BorderThickness="1" CornerRadius="10" Padding="18" Margin="0,0,0,14">
+                                    <StackPanel>
+                                        <Grid Margin="0,0,0,12">
+                                            <StackPanel>
+                                                <TextBlock Text="Instant results" FontSize="16" FontWeight="Bold"
+                                                           Foreground="{StaticResource DarkText}"/>
+                                                <TextBlock x:Name="TxtResultsSub" FontSize="11"
+                                                           Foreground="{StaticResource GrayText}" Margin="0,2,0,0"
+                                                           Text="Loading results…"/>
+                                            </StackPanel>
+                                            <Border Background="#DCFCE7" CornerRadius="6" Padding="8,4" HorizontalAlignment="Right">
+                                                <TextBlock x:Name="TxtFoundCount" Text="5 STATIONS FOUND"
+                                                           FontSize="10" FontWeight="Bold" Foreground="#16743F"/>
+                                            </Border>
+                                        </Grid>
+
+                                        <WrapPanel Margin="0,0,0,10">
+                                            <Border Background="#DCFCE7" CornerRadius="6" Padding="10,4" Margin="0,0,6,4">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock x:Name="TxtChipCity" Text="Lahore" FontSize="10"
+                                                               FontWeight="SemiBold" Foreground="#16743F"/>
+                                                    <TextBlock Text=" ✕" FontSize="10" Foreground="#16743F"
+                                                               Cursor="Hand" MouseLeftButtonDown="ChipCityClear_Click"/>
+                                                </StackPanel>
+                                            </Border>
+                                            <Border Background="#F3F4F6" CornerRadius="6" Padding="10,4" Margin="0,0,6,4">
+                                                <TextBlock x:Name="TxtChipPollutant" Text="PM2.5" FontSize="10"
+                                                           Foreground="#6B7280"/>
+                                            </Border>
+                                            <Border x:Name="ChipRange" Background="#F3F4F6" CornerRadius="6" Padding="10,4" Margin="0,0,4,4">
+                                                <TextBlock x:Name="TxtChipRange" Text="20-180 µg/m³" FontSize="10"
+                                                           Foreground="#6B7280"/>
+                                            </Border>
+                                        </WrapPanel>
+
+                                        <Border Background="#F9FAFB" CornerRadius="8" Padding="14,8" Margin="0,0,0,4">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2.2*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="30"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="STATION / LOCATION" FontSize="9" FontWeight="Bold"
+                                                           Foreground="{StaticResource LightGrayText}"/>
+                                                <TextBlock x:Name="TxtValueHeader" Grid.Column="1" Text="PM2.5 · µg/m³" FontSize="9" FontWeight="Bold"
+                                                           Foreground="{StaticResource LightGrayText}" HorizontalAlignment="Right"/>
+                                                <TextBlock Grid.Column="2" Text="OBSERVED AT" FontSize="9" FontWeight="Bold"
+                                                           Foreground="{StaticResource LightGrayText}" HorizontalAlignment="Right"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <ItemsControl x:Name="ResultsList" Margin="0,0,0,6">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="White" BorderBrush="{StaticResource BorderGray}"
+                                                            BorderThickness="0,0,0,1" Padding="14,10">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="2.2*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold"
+                                                                               Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                                                                    <Border Background="#F3F4F6" CornerRadius="4" Padding="6,2" Margin="8,0,0,0"
+                                                                            VerticalAlignment="Center">
+                                                                        <TextBlock Text="{Binding Code}" FontSize="9" Foreground="#6B7280"/>
+                                                                    </Border>
+                                                                </StackPanel>
+                                                                <TextBlock FontSize="10" Foreground="{StaticResource LightGrayText}" Margin="0,2,0,0"
+                                                                           Text="{Binding Location}"/>
+                                                            </StackPanel>
+                                                            <TextBlock Grid.Column="1" Text="{Binding ValueText}" FontSize="16" FontWeight="Bold"
+                                                                       Foreground="{StaticResource DarkText}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                            <TextBlock Grid.Column="2" Text="{Binding Observed}" FontSize="11"
+                                                                       Foreground="{StaticResource GrayText}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                            <Path Grid.Column="3" Data="{StaticResource Icon.ArrowUpRight}" Fill="#16A34A"
+                                                                  Stretch="Uniform" Width="14" Height="14" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+
+                                        <TextBlock x:Name="TxtEmpty" Visibility="Collapsed" TextAlignment="Center"
+                                                   Margin="0,12,0,12" FontSize="12" Foreground="{StaticResource LightGrayText}"
+                                                   Text="No stations match your search."/>
+
+                                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="0,1,0,0" Padding="0,8,0,0">
+                                            <TextBlock x:Name="TxtTableFooter" FontSize="10"
+                                                       Foreground="{StaticResource LightGrayText}"
+                                                       Text="Loading results…"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="White" BorderBrush="{StaticResource BorderGray}"
+                                        BorderThickness="1" CornerRadius="10" Padding="18">
+                                    <StackPanel>
+                                        <Grid Margin="0,0,0,8">
+                                            <TextBlock Text="Also supports Binary Search on sorted lists" FontSize="14" FontWeight="SemiBold"
+                                                       Foreground="{StaticResource DarkText}"/>
+                                            <Border Background="#DCFCE7" CornerRadius="6" Padding="8,3" HorizontalAlignment="Right">
+                                                <TextBlock Text="O(log n)" FontSize="10" FontWeight="Bold" Foreground="#16743F"/>
+                                            </Border>
+                                        </Grid>
+                                        <TextBlock Text="For an alphabetically sorted city list, halve the search space until the target is found. Hash lookup above uses indexed keys instead."
+                                                   FontSize="11" Foreground="{StaticResource GrayText}" TextWrapping="Wrap" Margin="0,0,0,12"/>
+
+                                        <WrapPanel>
+                                            <Border Style="{StaticResource CityChip}" MouseLeftButtonDown="BS_Faisalabad">
+                                                <TextBlock Text="Faisalabad" FontSize="11" Foreground="#6B7280"/>
+                                            </Border>
+                                            <Border Style="{StaticResource CityChip}" MouseLeftButtonDown="BS_Islamabad">
+                                                <TextBlock Text="Islamabad" FontSize="11" Foreground="#6B7280"/>
+                                            </Border>
+                                            <Border Style="{StaticResource CityChip}" MouseLeftButtonDown="BS_Karachi">
+                                                <TextBlock Text="Karachi" FontSize="11" Foreground="#6B7280"/>
+                                            </Border>
+                                            <Border x:Name="BSChipLahore" Style="{StaticResource CityChipActive}" MouseLeftButtonDown="BS_Lahore">
+                                                <TextBlock x:Name="BSChipLahoreText" Text="Lahore" FontSize="11" FontWeight="SemiBold" Foreground="#16743F"/>
+                                            </Border>
+                                            <Border Style="{StaticResource CityChip}" MouseLeftButtonDown="BS_Multan">
+                                                <TextBlock Text="Multan" FontSize="11" Foreground="#6B7280"/>
+                                            </Border>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <Border Grid.Column="2" Background="White" BorderBrush="{StaticResource BorderGray}"
+                                    BorderThickness="1" CornerRadius="10" Padding="18" VerticalAlignment="Top">
+                                <StackPanel>
+                                    <Grid Margin="0,0,0,14">
+                                        <TextBlock Text="Advanced Filters" FontSize="15" FontWeight="Bold"
+                                                   Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                                        <Path Data="{StaticResource Icon.Sliders}" Fill="#16743F"
+                                              Stretch="Uniform" Width="16" Height="16"
+                                              HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    </Grid>
+
+                                    <TextBlock Text="Date Range Picker" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{StaticResource DarkText}" Margin="0,0,0,8"/>
+                                    <TextBlock Text="From" FontSize="10" Foreground="{StaticResource GrayText}" Margin="0,0,0,4"/>
+                                    <Border Background="#F9FAFB" BorderBrush="{StaticResource BorderGray}" BorderThickness="1"
+                                            CornerRadius="6" Padding="10,8" Margin="0,0,0,8">
+                                        <Grid>
+                                            <TextBlock x:Name="TxtDateFrom" Text="16 Oct 2026" FontSize="12"
+                                                       Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                                            <Path Data="{StaticResource Icon.Calendar}" Fill="#9CA3AF"
+                                                  Stretch="Uniform" Width="14" Height="14"
+                                                  HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                    <TextBlock Text="To" FontSize="10" Foreground="{StaticResource GrayText}" Margin="0,0,0,4"/>
+                                    <Border Background="#F9FAFB" BorderBrush="{StaticResource BorderGray}" BorderThickness="1"
+                                            CornerRadius="6" Padding="10,8" Margin="0,0,0,12">
+                                        <Grid>
+                                            <TextBlock x:Name="TxtDateTo" Text="16 Oct 2026" FontSize="12"
+                                                       Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                                            <Path Data="{StaticResource Icon.Calendar}" Fill="#9CA3AF"
+                                                  Stretch="Uniform" Width="14" Height="14"
+                                                  HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <TextBlock Text="Pollutant Type" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{StaticResource DarkText}" Margin="0,0,0,6"/>
+                                    <Border Background="#F9FAFB" BorderBrush="{StaticResource BorderGray}" BorderThickness="1"
+                                            CornerRadius="6" Padding="10,8" Margin="0,0,0,14">
+                                        <Grid>
+                                            <TextBlock x:Name="TxtPollutant" Text="PM2.5" FontSize="12"
+                                                       Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                                            <Path Data="{StaticResource Icon.ChevronDown}" Fill="#9CA3AF"
+                                                  Stretch="Uniform" Width="12" Height="12"
+                                                  HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <Grid Margin="0,0,0,4">
+                                        <TextBlock Text="Min concentration" FontSize="11" FontWeight="SemiBold"
+                                                   Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                                        <TextBlock x:Name="TxtMinVal" Text="20 µg/m³" FontSize="11" FontWeight="SemiBold"
+                                                   Foreground="#16743F" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <Slider x:Name="SliderMin" Minimum="0" Maximum="250" Value="20"
+                                            TickFrequency="25" IsSnapToTickEnabled="True"
+                                            Foreground="#16A34A" Margin="0,4,0,0"
+                                            ValueChanged="SliderMin_ValueChanged"/>
+                                    <Grid Margin="4,0,4,0">
+                                        <TextBlock Text="0" FontSize="9" Foreground="{StaticResource LightGrayText}"/>
+                                        <TextBlock x:Name="TxtScaleEndMin" Text="250 µg/m³" FontSize="9" Foreground="{StaticResource LightGrayText}"
+                                                   HorizontalAlignment="Right"/>
+                                    </Grid>
+
+                                    <Grid Margin="0,12,0,4">
+                                        <TextBlock Text="Max concentration" FontSize="11" FontWeight="SemiBold"
+                                                   Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                                        <TextBlock x:Name="TxtMaxVal" Text="180 µg/m³" FontSize="11" FontWeight="SemiBold"
+                                                   Foreground="#16743F" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <Slider x:Name="SliderMax" Minimum="0" Maximum="250" Value="180"
+                                            TickFrequency="25" IsSnapToTickEnabled="True"
+                                            Foreground="#16A34A" Margin="0,4,0,0"
+                                            ValueChanged="SliderMax_ValueChanged"/>
+                                    <Grid Margin="4,0,4,0">
+                                        <TextBlock Text="0" FontSize="9" Foreground="{StaticResource LightGrayText}"/>
+                                        <TextBlock x:Name="TxtScaleEndMax" Text="250 µg/m³" FontSize="9" Foreground="{StaticResource LightGrayText}"
+                                                   HorizontalAlignment="Right"/>
+                                    </Grid>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                                        <Border Background="#F3F4F6" CornerRadius="6" Padding="14,7" Cursor="Hand"
+                                                MouseLeftButtonDown="BtnResetFilters_Click">
+                                            <TextBlock Text="Reset" FontSize="12" FontWeight="SemiBold" Foreground="#6B7280"/>
+                                        </Border>
+                                        <Border Background="#16A34A" CornerRadius="6" Padding="14,7" Cursor="Hand" Margin="8,0,0,0"
+                                                MouseLeftButtonDown="BtnApplyFilters_Click">
+                                            <TextBlock Text="Apply Filters" FontSize="12" FontWeight="SemiBold" Foreground="White"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <TextBlock Text="Filters apply to live OpenAQ readings across all synced cities. Results refresh after each data sync."
+                                               FontSize="9" Foreground="{StaticResource LightGrayText}"
+                                               TextWrapping="Wrap" Margin="0,10,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

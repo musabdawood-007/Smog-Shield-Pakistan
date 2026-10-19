@@ -1,0 +1,568 @@
+﻿<UserControl x:Class="SmogShield_Pakistan.Views.LandingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SmogShield_Pakistan.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="900" d:DesignWidth="1100"
+             Loaded="LandingView_Loaded"
+             Unloaded="LandingView_Unloaded">
+
+    <UserControl.Resources>
+
+        <Style x:Key="WinBtn" TargetType="Button">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#F3F4F6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WinBtnClose" TargetType="Button">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="Transparent">
+                            <Path x:Name="Ico" Data="{StaticResource Icon.WindowClose}"
+                                  Fill="#333333" Stretch="Uniform" Width="12" Height="12"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#E81123"/>
+                                <Setter TargetName="Ico" Property="Fill" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="InputField" TargetType="TextBox">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="{StaticResource PrimaryGreen}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="Bd" Background="White"
+                                BorderBrush="{StaticResource BorderGray}"
+                                BorderThickness="1.5" CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource PrimaryGreen}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{StaticResource PrimaryGreen}"
+                                CornerRadius="10" Padding="20,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource PrimaryGreenDark}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#166534"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Dropdown" TargetType="ComboBox">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border x:Name="Bd" Background="White"
+                                    BorderBrush="{StaticResource BorderGray}"
+                                    BorderThickness="1.5" CornerRadius="8"/>
+                            <ToggleButton x:Name="Toggle" Focusable="False" ClickMode="Press"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Background="Transparent" BorderThickness="0">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="Transparent" CornerRadius="8">
+                                            <Path Data="{StaticResource Icon.ChevronDown}"
+                                                  Fill="#6B7280" Stretch="Uniform"
+                                                  Width="12" Height="12"
+                                                  HorizontalAlignment="Right" Margin="0,0,14,0"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              Margin="14,0,36,0" VerticalAlignment="Center"
+                                              HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                            <Popup x:Name="PART_Popup" AllowsTransparency="True"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   Placement="Bottom" VerticalOffset="{TemplateBinding Height}">
+                                <Border Background="White"
+                                        BorderBrush="{StaticResource BorderGray}"
+                                        BorderThickness="1.5" CornerRadius="8"
+                                        Margin="0,4,0,0" MinWidth="{TemplateBinding ActualWidth}"
+                                        MaxHeight="200">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="12" ShadowDepth="3" Direction="270" Opacity="0.15"/>
+                                    </Border.Effect>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource PrimaryGreen}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#9CA3AF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DropdownItem" TargetType="ComboBoxItem">
+            <Setter Property="Padding" Value="14,9"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="Bd" Background="Transparent" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#F0FDF4"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource LightGreen}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CityCard" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardWhite}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderGray}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource BgGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource CardWhite}"
+                BorderBrush="{StaticResource BorderGray}" BorderThickness="0,0,0,1"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid Margin="12,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Path Data="{StaticResource Icon.ShieldCheck}" Fill="#16743F"
+                          Stretch="Uniform" Width="14" Height="14" VerticalAlignment="Center"/>
+                    <TextBlock Text="  SmogShield Pakistan" FontSize="12" FontWeight="SemiBold"
+                               Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Style="{StaticResource WinBtn}" Click="BtnMinimize_Click" ToolTip="Minimize">
+                        <Path Data="{StaticResource Icon.WindowMinimize}" Fill="#333333"
+                              Stretch="Uniform" Width="12" Height="12"/>
+                    </Button>
+                    <Button Style="{StaticResource WinBtn}" Click="BtnMaximize_Click" ToolTip="Maximize / Restore">
+                        <Path x:Name="MaxPath" Data="{StaticResource Icon.WindowMaximize}" Fill="#333333"
+                              Stretch="Uniform" Width="12" Height="12"/>
+                    </Button>
+                    <Button Style="{StaticResource WinBtnClose}" Click="BtnClose_Click" ToolTip="Close"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Background="{StaticResource CardWhite}"
+                BorderBrush="{StaticResource BorderGray}" BorderThickness="0,0,0,1"
+                Padding="40,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="38" Height="38" CornerRadius="10" Background="{StaticResource LightGreen}">
+                        <Path Data="{StaticResource Icon.ShieldCheck}" Fill="#16743F"
+                              Stretch="Uniform" Width="20" Height="20"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="SmogShield" FontSize="16" FontWeight="Bold"
+                                   Foreground="{StaticResource DarkText}"/>
+                        <TextBlock Text="P A K I S T A N" FontSize="8"
+                                   Foreground="{StaticResource LightGrayText}" Margin="0,-1,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="{StaticResource LightGreen}" CornerRadius="8"
+                            Padding="12,5" Margin="0,0,12,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource Icon.Wind}" Fill="#16743F"
+                                  Stretch="Uniform" Width="12" Height="12" VerticalAlignment="Center"/>
+                            <TextBlock Text="  Live Air Quality Monitoring" FontSize="11" FontWeight="SemiBold"
+                                       Foreground="{StaticResource PrimaryGreenDark}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="White" BorderBrush="{StaticResource BorderGray}"
+                            BorderThickness="1.5" Cursor="Hand" Padding="12,6" CornerRadius="8"
+                            MouseLeftButtonDown="BtnAdminLogin_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource Icon.User}" Fill="#111827"
+                                  Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center"/>
+                            <TextBlock Text="  Admin Login" FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" Margin="40,24,40,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1.35*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Border Background="{StaticResource LightGreen}" CornerRadius="6" Padding="6,4">
+                            <Path Data="{StaticResource Icon.Leaf}" Fill="#16743F"
+                                  Stretch="Uniform" Width="12" Height="12"/>
+                        </Border>
+                        <TextBlock Text="CLEARER DATA. BETTER AWARENESS."
+                                   FontSize="11" FontWeight="Bold"
+                                   Foreground="{StaticResource PrimaryGreen}"
+                                   Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="Understand the air."
+                               FontSize="40" FontWeight="Bold"
+                               Foreground="{StaticResource DarkText}"
+                               Margin="0,0,0,8" TextWrapping="Wrap"/>
+                    <TextBlock Text="Explore air quality across Pakistan. Turn complex pollution readings into a clearer picture of the air around us with real-time data."
+                               FontSize="13.5" Foreground="{StaticResource GrayText}"
+                               TextWrapping="Wrap" Margin="0,0,0,20" LineHeight="21"/>
+                </StackPanel>
+
+                <Border Grid.Row="1" CornerRadius="14"
+                        Background="{StaticResource CardWhite}"
+                        BorderBrush="{StaticResource BorderGray}" BorderThickness="1.5"
+                        ClipToBounds="True" VerticalAlignment="Stretch">
+                    <Grid>
+                        <Image x:Name="ImgA" Stretch="UniformToFill" Opacity="1"/>
+                        <Image x:Name="ImgB" Stretch="UniformToFill" Opacity="0"/>
+
+                        <Border Background="White" CornerRadius="8"
+                                Padding="12,6" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" Margin="16,16,0,0" Panel.ZIndex="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource Icon.Layers}" Fill="#16743F"
+                                      Stretch="Uniform" Width="11" Height="11" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="BadgeText" Text="  Live City Feed"
+                                           FontSize="11" FontWeight="SemiBold"
+                                           Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                    VerticalAlignment="Top" Margin="0,16,0,0"
+                                    Panel.ZIndex="10" x:Name="DotPanel">
+                            <Border x:Name="Dot0" Width="8" Height="8" CornerRadius="4" Background="White" Margin="3,0"/>
+                            <Border x:Name="Dot1" Width="8" Height="8" CornerRadius="4" Background="#66FFFFFF" Margin="3,0"/>
+                            <Border x:Name="Dot2" Width="8" Height="8" CornerRadius="4" Background="#66FFFFFF" Margin="3,0"/>
+                            <Border x:Name="Dot3" Width="8" Height="8" CornerRadius="4" Background="#66FFFFFF" Margin="3,0"/>
+                            <Border x:Name="Dot4" Width="8" Height="8" CornerRadius="4" Background="#66FFFFFF" Margin="3,0"/>
+                            <Border x:Name="Dot5" Width="8" Height="8" CornerRadius="4" Background="#66FFFFFF" Margin="3,0"/>
+                            <Border x:Name="Dot6" Width="8" Height="8" CornerRadius="4" Background="#66FFFFFF" Margin="3,0"/>
+                        </StackPanel>
+
+                        <Border VerticalAlignment="Bottom"
+                                Background="#B3111827" Padding="22,16" Panel.ZIndex="10">
+                            <StackPanel>
+                                <TextBlock x:Name="HeadlineText" Text="Lahore, beneath the haze."
+                                           FontSize="17" FontWeight="SemiBold" Foreground="White"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                    <Path Data="{StaticResource Icon.MapPin}" Fill="#A0B0C0"
+                                          Stretch="Uniform" Width="11" Height="11" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="SubtextText" Text="  Badshahi Mosque · Punjab, Pakistan"
+                                               FontSize="12" Foreground="#A0B0C0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Border Grid.Column="2" Grid.Row="0"
+                    Background="{StaticResource CardWhite}"
+                    BorderBrush="{StaticResource BorderGray}" BorderThickness="1.5"
+                    CornerRadius="14" Padding="24" VerticalAlignment="Stretch">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Border Background="{StaticResource LightGreen}" CornerRadius="6"
+                                Padding="10,4" HorizontalAlignment="Left" Margin="0,0,0,12">
+                            <TextBlock Text="VISITOR ACCESS" FontSize="10" FontWeight="Bold"
+                                       Foreground="{StaticResource PrimaryGreenDark}"/>
+                        </Border>
+
+                        <TextBlock Text="A little about you."
+                                   FontSize="22" FontWeight="Bold"
+                                   Foreground="{StaticResource DarkText}" Margin="0,0,0,6"/>
+
+                        <TextBlock Text="Tell us what brings you here to explore the live-data dashboard."
+                                   FontSize="12" Foreground="{StaticResource GrayText}"
+                                   TextWrapping="Wrap" Margin="0,0,0,18"/>
+
+                        <TextBlock Text="Name" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="{StaticResource DarkText}" Margin="0,0,0,6"/>
+                        <TextBox x:Name="TxtName" Style="{StaticResource InputField}" Margin="0,0,0,14"/>
+
+                        <TextBlock Text="Email" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="{StaticResource DarkText}" Margin="0,0,0,6"/>
+                        <TextBox x:Name="TxtEmail" Style="{StaticResource InputField}" Margin="0,0,0,14"/>
+
+                        <TextBlock Text="Purpose" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="{StaticResource DarkText}" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="CmbPurpose" Style="{StaticResource Dropdown}"
+                                  ItemContainerStyle="{StaticResource DropdownItem}"
+                                  SelectedIndex="-1" Margin="0,0,0,20">
+                            <ComboBoxItem Content="Student / Research"/>
+                            <ComboBoxItem Content="Journalist / Media"/>
+                            <ComboBoxItem Content="Government / Policy"/>
+                            <ComboBoxItem Content="General Public"/>
+                            <ComboBoxItem Content="Other"/>
+                        </ComboBox>
+
+                        <Button Style="{StaticResource PrimaryButton}" Click="BtnUnlock_Click">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="Unlock Live Data" FontSize="14" FontWeight="SemiBold"
+                                           Foreground="White" VerticalAlignment="Center"/>
+                                <Path Data="{StaticResource Icon.ArrowRight}" Fill="White"
+                                      Stretch="Uniform" Width="14" Height="14"
+                                      VerticalAlignment="Center" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
+                            <Path Data="{StaticResource Icon.Info}" Fill="#9CA3AF"
+                                  Stretch="Uniform" Width="12" Height="12" VerticalAlignment="Center"/>
+                            <TextBlock Text="  No account required. Instant access."
+                                       FontSize="11" Foreground="{StaticResource LightGrayText}"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1">
+
+                <Grid Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="A snapshot of our cities" FontSize="20" FontWeight="Bold"
+                               Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+
+                    <Border Grid.Column="1" Background="{StaticResource CardWhite}" CornerRadius="8"
+                            BorderBrush="{StaticResource BorderGray}" BorderThickness="1"
+                            Padding="12,6" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource Icon.Lock}" Fill="#6B7280"
+                                  Stretch="Uniform" Width="12" Height="12" VerticalAlignment="Center"/>
+                            <TextBlock Text="  Fill form to view real-time data"
+                                       FontSize="11" FontWeight="SemiBold"
+                                       Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Style="{StaticResource CityCard}">
+                        <StackPanel VerticalAlignment="Center">
+                            <Grid>
+                                <Border Background="#FEF2F2" CornerRadius="6" Padding="8,4"
+                                        HorizontalAlignment="Left">
+                                    <TextBlock Text="Lahore" FontSize="11" FontWeight="Bold" Foreground="#DC2626"/>
+                                </Border>
+                                <Border Background="{StaticResource BgGray}" CornerRadius="6"
+                                        Padding="8,3" HorizontalAlignment="Right">
+                                    <TextBlock x:Name="LahCardBadge" Text="SAMPLE DATA" FontSize="8.5" FontWeight="Bold"
+                                               Foreground="{StaticResource LightGrayText}"/>
+                                </Border>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,2">
+                                <TextBlock x:Name="LahCardValue" Text="125.4" FontSize="34" FontWeight="Bold"
+                                           Foreground="{StaticResource DarkText}"/>
+                                <TextBlock x:Name="LahCardUnit" Text=" µg/m³" FontSize="12" Foreground="{StaticResource GrayText}"
+                                           VerticalAlignment="Bottom" Margin="4,0,0,6"/>
+                            </StackPanel>
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Data="{StaticResource Icon.Wind}" Fill="#9CA3AF"
+                                          Stretch="Uniform" Width="11" Height="11" VerticalAlignment="Center"/>
+                                    <TextBlock Text="  PM2.5 · Fine particles" FontSize="11"
+                                               Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock x:Name="LahCardNote" Text="Loading…" FontSize="11"
+                                           Foreground="{StaticResource LightGrayText}" HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource CityCard}">
+                        <StackPanel VerticalAlignment="Center">
+                            <Grid>
+                                <Border Background="#FFFBEB" CornerRadius="6" Padding="8,4"
+                                        HorizontalAlignment="Left">
+                                    <TextBlock Text="Karachi" FontSize="11" FontWeight="Bold" Foreground="#D97706"/>
+                                </Border>
+                                <Border Background="{StaticResource BgGray}" CornerRadius="6"
+                                        Padding="8,3" HorizontalAlignment="Right">
+                                    <TextBlock x:Name="KhiCardBadge" Text="SAMPLE DATA" FontSize="8.5" FontWeight="Bold"
+                                               Foreground="{StaticResource LightGrayText}"/>
+                                </Border>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,2">
+                                <TextBlock x:Name="KhiCardValue" Text="58.2" FontSize="34" FontWeight="Bold"
+                                           Foreground="{StaticResource DarkText}"/>
+                                <TextBlock x:Name="KhiCardUnit" Text=" µg/m³" FontSize="12" Foreground="{StaticResource GrayText}"
+                                           VerticalAlignment="Bottom" Margin="4,0,0,6"/>
+                            </StackPanel>
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Data="{StaticResource Icon.Wind}" Fill="#9CA3AF"
+                                          Stretch="Uniform" Width="11" Height="11" VerticalAlignment="Center"/>
+                                    <TextBlock Text="  PM2.5 · Fine particles" FontSize="11"
+                                               Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock x:Name="KhiCardNote" Text="Loading…" FontSize="11"
+                                           Foreground="{StaticResource LightGrayText}" HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="4" Style="{StaticResource CityCard}">
+                        <StackPanel VerticalAlignment="Center">
+                            <Grid>
+                                <Border Background="#F0FDF4" CornerRadius="6" Padding="8,4"
+                                        HorizontalAlignment="Left">
+                                    <TextBlock Text="Islamabad" FontSize="11" FontWeight="Bold" Foreground="#16A34A"/>
+                                </Border>
+                                <Border Background="{StaticResource BgGray}" CornerRadius="6"
+                                        Padding="8,3" HorizontalAlignment="Right">
+                                    <TextBlock x:Name="IsbCardBadge" Text="SAMPLE DATA" FontSize="8.5" FontWeight="Bold"
+                                               Foreground="{StaticResource LightGrayText}"/>
+                                </Border>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,2">
+                                <TextBlock x:Name="IsbCardValue" Text="32.6" FontSize="34" FontWeight="Bold"
+                                           Foreground="{StaticResource DarkText}"/>
+                                <TextBlock x:Name="IsbCardUnit" Text=" µg/m³" FontSize="12" Foreground="{StaticResource GrayText}"
+                                           VerticalAlignment="Bottom" Margin="4,0,0,6"/>
+                            </StackPanel>
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Data="{StaticResource Icon.Wind}" Fill="#9CA3AF"
+                                          Stretch="Uniform" Width="11" Height="11" VerticalAlignment="Center"/>
+                                    <TextBlock Text="  PM2.5 · Fine particles" FontSize="11"
+                                               Foreground="{StaticResource GrayText}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock x:Name="IsbCardNote" Text="Loading…" FontSize="11"
+                                           Foreground="{StaticResource LightGrayText}" HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

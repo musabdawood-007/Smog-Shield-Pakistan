@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>SmogShield_Pakistan</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\SmogShield.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\*.png" />
+    <Resource Include="Assets\Images\*.jpg" />
+    <Resource Include="Assets\Icons\*.png" />
+    <Resource Include="Assets\Icons\*.jpg" />
+    <Resource Include="Assets\Icons\Smog_Icons\Icons.xaml" />
+    <Resource Include="Assets\SmogShield.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\sample_readings.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SQL\SmogShield_Setup.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
+  </ItemGroup>
+
+</Project>

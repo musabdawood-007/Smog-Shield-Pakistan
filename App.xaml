@@ -1,0 +1,24 @@
+﻿<Application x:Class="SmogShield_Pakistan.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SmogShield_Pakistan"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/Icons/Smog_Icons/Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="PrimaryGreen" Color="#16A34A"/>
+            <SolidColorBrush x:Key="PrimaryGreenDark" Color="#15803D"/>
+            <SolidColorBrush x:Key="IconGreen" Color="#16743F"/>
+            <SolidColorBrush x:Key="LightGreen" Color="#DCFCE7"/>
+            <SolidColorBrush x:Key="DarkText" Color="#111827"/>
+            <SolidColorBrush x:Key="GrayText" Color="#6B7280"/>
+            <SolidColorBrush x:Key="LightGrayText" Color="#9CA3AF"/>
+            <SolidColorBrush x:Key="BorderGray" Color="#E5E7EB"/>
+            <SolidColorBrush x:Key="BgGray" Color="#F3F4F6"/>
+            <SolidColorBrush x:Key="CardWhite" Color="#FFFFFF"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

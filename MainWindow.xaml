@@ -1,0 +1,30 @@
+﻿<Window x:Class="SmogShield_Pakistan.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmogShield_Pakistan"
+        xmlns:views="clr-namespace:SmogShield_Pakistan.Views"
+        mc:Ignorable="d"
+        Title="SmogShield Pakistan"
+        Icon="Assets/SmogShield.ico"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        WindowState="Maximized"
+        Background="#F3F4F6"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Ideal"
+        FontFamily="Segoe UI">
+    <Grid>
+        <views:LandingView x:Name="LandingView"/>
+        <views:AdminLoginView x:Name="AdminLoginView" Visibility="Collapsed"/>
+        <views:AdminControlView x:Name="AdminControlView" Visibility="Collapsed"/>
+        <views:DashboardView x:Name="DashboardView" Visibility="Collapsed"/>
+        <views:RankingView x:Name="RankingView" Visibility="Collapsed"/>
+        <views:CompareView x:Name="CompareView" Visibility="Collapsed"/>
+        <views:SearchView x:Name="SearchView" Visibility="Collapsed"/>
+        <views:SettingsView x:Name="SettingsView" Visibility="Collapsed"/>
+    </Grid>
+</Window>

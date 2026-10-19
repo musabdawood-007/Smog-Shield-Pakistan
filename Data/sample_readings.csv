@@ -1,0 +1,20 @@
+Code,City,Station,Location,Pm25,Pm10,Aqi,Source,ObservedAt
+LHR-001,Lahore,Township,"Lahore, Punjab",128.6,198.0,214,Sample,2026-10-17 10:00:00
+LHR-002,Lahore,Gulberg,"Lahore, Punjab",132.8,205.0,220,Sample,2026-10-17 10:00:00
+LHR-003,Lahore,Jail Road,"Lahore, Punjab",125.0,190.0,208,Sample,2026-10-17 10:00:00
+LHR-004,Lahore,Model Town,"Lahore, Punjab",118.0,182.0,198,Sample,2026-10-17 10:00:00
+LHR-005,Lahore,DHA,"Lahore, Punjab",108.8,170.0,186,Sample,2026-10-17 10:00:00
+KHI-001,Karachi,Clifton,"Karachi, Sindh",78.4,120.0,162,Sample,2026-10-17 10:00:00
+KHI-002,Karachi,Gulshan,"Karachi, Sindh",72.5,112.0,152,Sample,2026-10-17 10:00:00
+KHI-003,Karachi,Saddar,"Karachi, Sindh",84.6,130.0,168,Sample,2026-10-17 10:00:00
+ISB-001,Islamabad,Sector F-6,"Islamabad, Capital",35.2,68.0,100,Sample,2026-10-17 10:00:00
+ISB-002,Islamabad,Sector G-8,"Islamabad, Capital",38.0,72.0,106,Sample,2026-10-17 10:00:00
+LYP-001,Faisalabad,Jhang Road,"Faisalabad, Punjab",95.0,148.0,176,Sample,2026-10-17 10:00:00
+LYP-002,Faisalabad,Peoples Colony,"Faisalabad, Punjab",88.5,138.0,168,Sample,2026-10-17 10:00:00
+PEW-001,Peshawar,University,"Peshawar, KP",88.0,138.0,168,Sample,2026-10-17 10:00:00
+PEW-002,Peshawar,Hayatabad,"Peshawar, KP",76.0,118.0,156,Sample,2026-10-17 10:00:00
+MUX-001,Multan,Cantt,"Multan, Punjab",102.0,158.0,180,Sample,2026-10-17 10:00:00
+UET-001,Quetta,Sariab Road,"Quetta, Balochistan",65.0,105.0,148,Sample,2026-10-17 10:00:00
+HDD-001,Hyderabad,Railway,"Hyderabad, Sindh",42.3,70.6,116,Sample,2026-10-17 10:00:00
+GUJ-001,Gujranwala,Model Town,"Gujranwala, Punjab",91.5,148.3,172,Sample,2026-10-17 10:00:00
+RWP-001,Rawalpindi,Saddar,"Rawalpindi, Punjab",62.8,102.4,145,Sample,2026-10-17 10:00:00
